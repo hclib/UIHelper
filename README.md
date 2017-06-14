@@ -15,7 +15,7 @@ so,问题来了？一遍又一遍的运行,查看效果,这样出力不讨好的
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //启用UIHelper,不用的时候在此设置enabled=NO即可
-    [UIHelperSwitch sharedSwitch].enabled = YES;
+    [UIHelper sharedHelper].enabled = YES;
 
     //other code
 
