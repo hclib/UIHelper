@@ -9,8 +9,31 @@
 #import "UIView+Helper.h"
 #import "UIHelperSwitch.h"
 
+NSMutableArray *_textFields;
+UITextField *_currentField;
 @implementation UIView (Helper)
 
+- (void)addUIHelperRecursive:(BOOL)recursive{
+    if (![UIHelperSwitch sharedSwitch].isEnabled) {
+        return;
+    }
+    if ([self isKindOfClass:[UILabel class]] || [self isKindOfClass:[UIImageView class]]) {
+        self.userInteractionEnabled = YES;
+    }
+    UITapGestureRecognizer *showAlertTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChangeFrameAlert)];
+    showAlertTap.numberOfTapsRequired = 2;
+    if (recursive) {
+        for (UIView *subView in self.subviews) {
+            [subView addUIHelperRecursive:recursive];
+        }
+    }
+    _textFields = [NSMutableArray array];
+    [self addGestureRecognizer:showAlertTap];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
+}
+
+#pragma mark - 属性列表
 - (void)showChangeFrameAlert{
     NSString *title = [NSString stringWithFormat:@"%@",NSStringFromClass(self.class)];
     NSString *message = [NSString stringWithFormat:@"%@",NSStringFromCGRect(self.frame)];
@@ -26,6 +49,7 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"x=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //1.y
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -38,6 +62,7 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"y=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //2.width
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -50,6 +75,7 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"width=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //3.height
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -62,12 +88,14 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"height=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //4.backgroundColor
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         
         textField.placeholder = [NSString stringWithFormat:@"backgroundColor=%@",[self hexStrForColor:self.backgroundColor]];
         textField.keyboardType = UIKeyboardTypeNumberPad;
+        [self addInputAccessoryViewForField:textField isColor:YES];
     }];
     //UILabel && UIButton
     if ([self isKindOfClass:[UILabel class]] || [self isKindOfClass:[UIButton class]]) {
@@ -81,6 +109,7 @@
             }
             textField.placeholder = [NSString stringWithFormat:@"fontsize=%.f",font];
             textField.keyboardType = UIKeyboardTypeNumberPad;
+            [self addInputAccessoryViewForField:textField isColor:NO];
         }];
         //6.textColor
         [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -92,6 +121,7 @@
             }
             textField.placeholder = [NSString stringWithFormat:@"textColor=%@",[self hexStrForColor:textColor]];
             textField.keyboardType = UIKeyboardTypeNumberPad;
+            [self addInputAccessoryViewForField:textField isColor:YES];
         }];
     }
     //7.borderWidth
@@ -105,11 +135,13 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"borderWidth=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //8.borderColor
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = [NSString stringWithFormat:@"borderColor=%@",[self hexStrForColor:[UIColor colorWithCGColor:self.layer.borderColor]]];
         textField.keyboardType = UIKeyboardTypeNumberPad;
+        [self addInputAccessoryViewForField:textField isColor:YES];
     }];
     //9.cornerRadius
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -122,6 +154,7 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"cornerRadius=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //10.backgroundColor.alpha
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -136,6 +169,7 @@
         }
         textField.placeholder = [NSString stringWithFormat:@"backgroundColor.alpha=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
     //11.self.alpha
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -149,8 +183,15 @@
         
         textField.placeholder = [NSString stringWithFormat:@"self.alpha=%@",placeholder];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addInputAccessoryViewForField:textField isColor:NO];
     }];
+#pragma mark - 确定
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [_textFields removeAllObjects];
+        _textFields = nil;
+        _currentField = nil;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:nil];
+        
         //0.x
         UITextField *xField = alert.textFields[0];
         //1.y
@@ -241,23 +282,6 @@
     }];
     [alert addAction:confirm];
     [[self getController] presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)addUIHelperRecursive:(BOOL)recursive{
-    if (![UIHelperSwitch sharedSwitch].isEnabled) {
-        return;
-    }
-    if ([self isKindOfClass:[UILabel class]] || [self isKindOfClass:[UIImageView class]]) {
-        self.userInteractionEnabled = YES;
-    }
-    UITapGestureRecognizer *showAlertTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChangeFrameAlert)];
-    showAlertTap.numberOfTapsRequired = 2;
-    if (recursive) {
-        for (UIView *subView in self.subviews) {
-            [subView addUIHelperRecursive:recursive];
-        }
-    }
-    [self addGestureRecognizer:showAlertTap];
 }
 
 //获取当前view所在的controller
@@ -393,4 +417,83 @@
     return [UIColor colorWithRed:((float)r/255.0f) green:((float)g/255.0f) blue:((float)b/255.0f) alpha:1.0f];
 }
 
+#pragma mark - 键盘处理
+- (void)addInputAccessoryViewForField:(UITextField *)textField isColor:(BOOL)isColor{
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    
+    if ([textField respondsToSelector:@selector(keyboardAppearance)])
+    {
+        switch ([textField keyboardAppearance])
+        {
+            case UIKeyboardAppearanceAlert: toolbar.barStyle = UIBarStyleBlack;     break;
+            default:                        toolbar.barStyle = UIBarStyleDefault;   break;
+        }
+    }
+    
+    toolbar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44);
+    //上一个
+    UIBarButtonItem *previousItem = [[UIBarButtonItem alloc] initWithTitle:@"上一个" style:UIBarButtonItemStylePlain target:self action:@selector(previous)];
+    previousItem.style = UIBarButtonSystemItemFastForward;
+    
+    //下一个
+    UIBarButtonItem *nextItem = [[UIBarButtonItem alloc] initWithTitle:@"下一个" style:UIBarButtonItemStylePlain target:self action:@selector(next)];
+    nextItem.style = UIBarButtonSystemItemFastForward;
+    
+    UIBarButtonItem *A = [[UIBarButtonItem alloc] initWithTitle:@"A" style:UIBarButtonItemStylePlain target:self action:@selector(selectHexStr:)];
+    UIBarButtonItem *B = [[UIBarButtonItem alloc] initWithTitle:@"B" style:UIBarButtonItemStylePlain target:self action:@selector(selectHexStr:)];
+    UIBarButtonItem *C = [[UIBarButtonItem alloc] initWithTitle:@"C" style:UIBarButtonItemStylePlain target:self action:@selector(selectHexStr:)];
+    UIBarButtonItem *D = [[UIBarButtonItem alloc] initWithTitle:@"D" style:UIBarButtonItemStylePlain target:self action:@selector(selectHexStr:)];
+    UIBarButtonItem *E = [[UIBarButtonItem alloc] initWithTitle:@"E" style:UIBarButtonItemStylePlain target:self action:@selector(selectHexStr:)];
+    UIBarButtonItem *F = [[UIBarButtonItem alloc] initWithTitle:@"F" style:UIBarButtonItemStylePlain target:self action:@selector(selectHexStr:)];
+    
+    //中间的弹簧
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    //完成
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:nil];
+    doneItem.style = UIBarButtonSystemItemDone;
+    if (isColor) {
+        toolbar.items = @[previousItem,nextItem,flexibleItem,A,flexibleItem,B,flexibleItem,C,flexibleItem,D,flexibleItem,E,flexibleItem,F,flexibleItem,doneItem];
+    }else{
+        toolbar.items = @[previousItem,nextItem,flexibleItem,doneItem];
+    }
+    
+    textField.inputAccessoryView = toolbar;
+    
+    [_textFields addObject:textField];
+}
+
+//上一个
+- (void)previous{
+    NSInteger currentIndex = [_textFields indexOfObject:_currentField];
+    if (currentIndex == 0) {
+        return;
+    }
+    _currentField = [_textFields objectAtIndex:currentIndex - 1];
+    [_currentField becomeFirstResponder];
+}
+
+//下一个
+- (void)next{
+    NSInteger currentIndex = [_textFields indexOfObject:_currentField];
+    if (currentIndex == _textFields.count - 1) {
+        return;
+    }
+    _currentField = [_textFields objectAtIndex:currentIndex + 1];
+    [_currentField becomeFirstResponder];
+}
+
+- (void)textFieldTextDidBeginEditing:(NSNotification *)notification{
+    UITextField *textField = (UITextField *)notification.object;
+    _currentField = textField;
+}
+
+//选择16进制字符
+- (void)selectHexStr:(UIBarButtonItem *)hexItem{
+    NSString *originalText = _currentField.text;
+    originalText = [originalText stringByAppendingString:hexItem.title];
+    _currentField.text = originalText;
+}
+
 @end
+
