@@ -273,6 +273,9 @@
 
 //取出一个颜色的十六进制表示
 - (NSString *)hexStrForColor:(UIColor *)color{
+    if (!color) {
+        color = [UIColor whiteColor];
+    }
     CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(CGColorGetColorSpace(color.CGColor));
     
     const CGFloat *components = CGColorGetComponents(color.CGColor);
