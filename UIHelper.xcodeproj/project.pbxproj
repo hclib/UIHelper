@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8D22F0571EEFF31200305348 /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D22F0551EEFF31200305348 /* UIHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D22F05F1EEFF37500305348 /* UIView+Helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D22F05D1EEFF37500305348 /* UIView+Helper.h */; };
 		8D22F0601EEFF37500305348 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D22F05E1EEFF37500305348 /* UIView+Helper.m */; };
-		8D22F0A41EF0D70400305348 /* UIHelperSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D22F0A21EF0D70400305348 /* UIHelperSwitch.h */; };
-		8D22F0A51EF0D70400305348 /* UIHelperSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D22F0A31EF0D70400305348 /* UIHelperSwitch.m */; };
+		8D56AB6A1EF14AAB00CC27D0 /* UIHelper.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8D56AB691EF14AAB00CC27D0 /* UIHelper.bundle */; };
+		8D56AB6D1EF14BFB00CC27D0 /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D56AB6B1EF14BFB00CC27D0 /* UIHelper.h */; };
+		8D56AB6E1EF14BFB00CC27D0 /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D56AB6C1EF14BFB00CC27D0 /* UIHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8D22F0521EEFF31200305348 /* UIHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D22F0551EEFF31200305348 /* UIHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
 		8D22F0561EEFF31200305348 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D22F05D1EEFF37500305348 /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helper.h"; sourceTree = "<group>"; };
 		8D22F05E1EEFF37500305348 /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helper.m"; sourceTree = "<group>"; };
-		8D22F0A21EF0D70400305348 /* UIHelperSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelperSwitch.h; sourceTree = "<group>"; };
-		8D22F0A31EF0D70400305348 /* UIHelperSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHelperSwitch.m; sourceTree = "<group>"; };
+		8D56AB691EF14AAB00CC27D0 /* UIHelper.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UIHelper.bundle; sourceTree = "<group>"; };
+		8D56AB6B1EF14BFB00CC27D0 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
+		8D56AB6C1EF14BFB00CC27D0 /* UIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +54,22 @@
 		8D22F0541EEFF31200305348 /* UIHelper */ = {
 			isa = PBXGroup;
 			children = (
-				8D22F0551EEFF31200305348 /* UIHelper.h */,
+				8D56AB6B1EF14BFB00CC27D0 /* UIHelper.h */,
+				8D56AB6C1EF14BFB00CC27D0 /* UIHelper.m */,
 				8D22F05D1EEFF37500305348 /* UIView+Helper.h */,
 				8D22F05E1EEFF37500305348 /* UIView+Helper.m */,
-				8D22F0A21EF0D70400305348 /* UIHelperSwitch.h */,
-				8D22F0A31EF0D70400305348 /* UIHelperSwitch.m */,
 				8D22F0561EEFF31200305348 /* Info.plist */,
+				8D56AB681EF14A9000CC27D0 /* Resources */,
 			);
 			path = UIHelper;
+			sourceTree = "<group>";
+		};
+		8D56AB681EF14A9000CC27D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D56AB691EF14AAB00CC27D0 /* UIHelper.bundle */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,8 +79,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D22F0571EEFF31200305348 /* UIHelper.h in Headers */,
-				8D22F0A41EF0D70400305348 /* UIHelperSwitch.h in Headers */,
+				8D56AB6D1EF14BFB00CC27D0 /* UIHelper.h in Headers */,
 				8D22F05F1EEFF37500305348 /* UIView+Helper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D56AB6A1EF14AAB00CC27D0 /* UIHelper.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D22F0601EEFF37500305348 /* UIView+Helper.m in Sources */,
-				8D22F0A51EF0D70400305348 /* UIHelperSwitch.m in Sources */,
+				8D56AB6E1EF14BFB00CC27D0 /* UIHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

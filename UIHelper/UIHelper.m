@@ -1,16 +1,16 @@
 //
-//  UIHelperSwitch.m
-//  UIHelper
+//  UIHelper.m
+//  test
 //
 //  Created by suhc on 2017/6/14.
 //  Copyright © 2017年 hclib. All rights reserved.
 //
 
-#import "UIHelperSwitch.h"
+#import "UIHelper.h"
 
-@implementation UIHelperSwitch
+@implementation UIHelper
 
-static UIHelperSwitch *_instance;
+static UIHelper *_instance;
 
 + (id)allocWithZone:(struct _NSZone *)zone
 {
@@ -20,7 +20,7 @@ static UIHelperSwitch *_instance;
     });
     return _instance;
 }
-+ (instancetype)sharedSwitch
++ (instancetype)sharedHelper
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
