@@ -10,6 +10,8 @@
 		8D22F0571EEFF31200305348 /* UIHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D22F0551EEFF31200305348 /* UIHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D22F05F1EEFF37500305348 /* UIView+Helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D22F05D1EEFF37500305348 /* UIView+Helper.h */; };
 		8D22F0601EEFF37500305348 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D22F05E1EEFF37500305348 /* UIView+Helper.m */; };
+		8D22F0A41EF0D70400305348 /* UIHelperSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D22F0A21EF0D70400305348 /* UIHelperSwitch.h */; };
+		8D22F0A51EF0D70400305348 /* UIHelperSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D22F0A31EF0D70400305348 /* UIHelperSwitch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,8 @@
 		8D22F0561EEFF31200305348 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D22F05D1EEFF37500305348 /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helper.h"; sourceTree = "<group>"; };
 		8D22F05E1EEFF37500305348 /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helper.m"; sourceTree = "<group>"; };
+		8D22F0A21EF0D70400305348 /* UIHelperSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelperSwitch.h; sourceTree = "<group>"; };
+		8D22F0A31EF0D70400305348 /* UIHelperSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHelperSwitch.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 				8D22F0551EEFF31200305348 /* UIHelper.h */,
 				8D22F05D1EEFF37500305348 /* UIView+Helper.h */,
 				8D22F05E1EEFF37500305348 /* UIView+Helper.m */,
+				8D22F0A21EF0D70400305348 /* UIHelperSwitch.h */,
+				8D22F0A31EF0D70400305348 /* UIHelperSwitch.m */,
 				8D22F0561EEFF31200305348 /* Info.plist */,
 			);
 			path = UIHelper;
@@ -66,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D22F0571EEFF31200305348 /* UIHelper.h in Headers */,
+				8D22F0A41EF0D70400305348 /* UIHelperSwitch.h in Headers */,
 				8D22F05F1EEFF37500305348 /* UIView+Helper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D22F0601EEFF37500305348 /* UIView+Helper.m in Sources */,
+				8D22F0A51EF0D70400305348 /* UIHelperSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

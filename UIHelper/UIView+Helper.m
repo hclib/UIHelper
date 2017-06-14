@@ -7,6 +7,7 @@
 //
 
 #import "UIView+Helper.h"
+#import "UIHelperSwitch.h"
 
 @implementation UIView (Helper)
 
@@ -243,6 +244,9 @@
 }
 
 - (void)addUIHelperRecursive:(BOOL)recursive{
+    if (![UIHelperSwitch sharedSwitch].isEnabled) {
+        return;
+    }
     if ([self isKindOfClass:[UILabel class]] || [self isKindOfClass:[UIImageView class]]) {
         self.userInteractionEnabled = YES;
     }
