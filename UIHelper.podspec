@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name         = "UIHelper"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.8'
-  s.summary      = "A fast and convenient tool for you to debug UI"
+  s.summary      = "A convenient tool for you to debug UI"
   s.homepage     = "https://github.com/hclib/UIHelper"
   s.license      = "MIT"
   s.author             = { "suhc" => "hongchengplus@163.com" }
