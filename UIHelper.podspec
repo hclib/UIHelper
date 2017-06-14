@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "UIHelper"
-  s.version      = "0.0.2"
+  s.version      = "0.0.4"
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.8'
   s.summary      = "A convenient tool for you to debug UI"

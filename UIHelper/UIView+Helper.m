@@ -268,7 +268,7 @@
             return (UIViewController *)nextResponder;
         }
     }
-    return nil;
+    return [UIApplication sharedApplication].keyWindow.rootViewController;
 }
 
 //取出一个颜色的十六进制表示
@@ -299,7 +299,9 @@
 
 //透明度
 - (NSString *)alphaStrForColor:(UIColor *)color{
-    
+    if (!color) {
+        color = [UIColor whiteColor];
+    }
     const CGFloat *components = CGColorGetComponents(color.CGColor);
     float alpha = components[CGColorGetNumberOfComponents(color.CGColor) - 1];
     
