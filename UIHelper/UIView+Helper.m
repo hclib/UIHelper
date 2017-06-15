@@ -15,6 +15,7 @@ UIAlertController *_alert;
 @implementation UIView (Helper)
 
 - (void)addUIHelperRecursive:(BOOL)recursive{
+#ifdef DEBUG
     if (![UIHelper sharedHelper].isEnabled) {
         return;
     }
@@ -31,6 +32,7 @@ UIAlertController *_alert;
     [self addGestureRecognizer:showAlertTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
+#endif
 }
 
 #pragma mark - 属性列表
