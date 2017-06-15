@@ -37,6 +37,7 @@ UIAlertController *_alert;
 
 #pragma mark - 属性列表
 - (void)showChangeFrameAlert{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
     _textFields = [NSMutableArray array];
     NSString *title = [NSString stringWithFormat:@"%@",NSStringFromClass(self.class)];
     NSString *message = [NSString stringWithFormat:@"%@",NSStringFromCGRect(self.frame)];
